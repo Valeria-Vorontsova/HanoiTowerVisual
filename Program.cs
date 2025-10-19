@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace HanoiTower
 {
-    class Program
+    internal static class Program
     {
         [STAThread]
         static void Main()

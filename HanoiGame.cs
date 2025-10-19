@@ -35,19 +35,36 @@ namespace HanoiTower
             MoveCount = 0;
         }
 
-        public bool TryMoveDisk(int from, int to)
+        // Этот метод теперь только проверяет возможность хода
+        public bool CanMove(int from, int to)
         {
+            if (from < 0 || from >= 3 || to < 0 || to >= 3)
+                return false;
             if (from == to || Towers[from].IsEmpty)
                 return false;
 
-            var disk = Towers[from].Peek(); 
-            if (!Towers[to].CanPlaceDisk(disk))
+            var disk = Towers[from].Peek();
+            return Towers[to].CanPlaceDisk(disk);
+        }
+
+        // Этот метод выполняет перемещение (вызывается после анимации)
+        public void Move(int from, int to)
+        {
+            if (CanMove(from, to))
+            {
+                var disk = Towers[from].RemoveDisk();
+                Towers[to].PlaceDisk(disk);
+                MoveCount++;
+            }
+        }
+
+        // Старый метод TryMoveDisk можно оставить для обратной совместимости
+        public bool TryMoveDisk(int from, int to)
+        {
+            if (!CanMove(from, to))
                 return false;
 
-            Towers[from].RemoveDisk();
-            Towers[to].PlaceDisk(disk);
-            MoveCount++;
-
+            Move(from, to);
             return true;
         }
 
@@ -55,8 +72,7 @@ namespace HanoiTower
         {
             foreach (var tower in Towers)
             {
-                while (!tower.IsEmpty)
-                    tower.RemoveDisk();
+                tower.Clear();
             }
             InitializeGame();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HanoiTower
 {
-    public class HanoiTower
+    public class HanoiAlg
     {
         public List<Move> GenerateSolution(int disks, int from, int to, int aux)
         {

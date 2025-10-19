@@ -43,5 +43,10 @@ namespace HanoiTower
         }
 
         public int DiskCount => disks.Count;
+
+        public void Clear()
+        {
+            disks.Clear();
+        }
     }
 }
